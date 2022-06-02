@@ -1,11 +1,14 @@
 package com.netcompany.crawltool.service;
 
+import com.netcompany.crawltool.configuration.SeleniumConfiguration;
 import com.netcompany.crawltool.model.Menu;
 import com.netcompany.crawltool.model.UserInfo;
 import lombok.AllArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +22,8 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class ScraperService {
 //    private static final String URL = "https://pct:Nhatrangg@2022@goto.netcompany.com/cases/GTE676/NCVNOFF/default.aspx";
-    private final WebDriver driver; // sửa
+
+    private final WebDriver driver; // Fix
     
 
 //    @PostConstruct
@@ -28,7 +32,12 @@ public class ScraperService {
 //    }
 
     public Menu scrape(UserInfo userInfo) {
-
+        /**
+         * Code for open new driver
+         * ông có thể coi dùng thử 2 dòng này
+         */
+//        ChromeOptions options = new ChromeOptions();
+//        driver = new ChromeDriver(options);
         Menu menu = new Menu();
         
         try {
@@ -47,11 +56,7 @@ public class ScraperService {
 
 
 
-//            for (WebElement monDish : monDishes) {
-//                menu.setMainDish(monDish.getText());
-//            }
-
-//            menu.setMainDish(monDishes.get(0).getText());
+            menu.setMainDish(monDishes.get(0).getText());
 //
 //            ArrayList<String> word = new ArrayList<>();
 //
@@ -62,12 +67,12 @@ public class ScraperService {
 //            System.out.println(Arrays.toString(word.toArray()));
 
             driver.quit();
-            // TimeUnit.SECONDS.sleep(5);
 
             return menu;
 
         } catch (Exception e) {
             System.out.println("Oops! Something went wrong!");
+            menu.setMainDish(null);
             return null;
         }
     }
