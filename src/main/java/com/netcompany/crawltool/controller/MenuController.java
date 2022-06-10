@@ -15,7 +15,14 @@ public class MenuController {
     ScraperService scraperService;
 
     @PostMapping
-    public Menu getMenu (@RequestBody UserInfo userInfo) {
+    public String getMenu (@RequestBody UserInfo userInfo) {
         return scraperService.scrape(userInfo);
     }
+
+//    @GetMapping
+//    public void test (){
+//        scraperService.write();
+//        return;
+//    }
+
 }
