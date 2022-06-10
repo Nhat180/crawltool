@@ -17,11 +17,7 @@ public class MenuController {
     ScraperService scraperService;
 
     @PostMapping
-    public ResponseEntity<String> getMenu (@RequestBody UserInfo userInfo) {
-       if (scraperService.scrape(userInfo) != null) {
-           return new ResponseEntity<>("Verification is successful! Please go back your Home Page to enjoy!", HttpStatus.OK);
-       } else {
-           return new ResponseEntity<>("Oops", HttpStatus.BAD_REQUEST);
-       }
+    public String getMenu (@RequestBody UserInfo userInfo) {
+        return scraperService.scrape(userInfo);
     }
 }
