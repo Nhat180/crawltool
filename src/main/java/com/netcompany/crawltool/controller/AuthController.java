@@ -15,6 +15,11 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
+    @GetMapping
+    public String hello() {
+        return "Hello Crawl server";
+    }
+
 
     @PostMapping
     public ResponseEntity<String> login (@RequestBody UserInfo userInfo) {
