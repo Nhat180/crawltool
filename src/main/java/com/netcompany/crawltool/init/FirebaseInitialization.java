@@ -19,6 +19,7 @@ public class FirebaseInitialization {
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setDatabaseUrl("https://netcompany-office-tool-db.firebaseio.com/")
                 .build();
 
 
