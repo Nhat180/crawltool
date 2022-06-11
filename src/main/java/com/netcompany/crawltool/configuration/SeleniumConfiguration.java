@@ -19,9 +19,9 @@ public class SeleniumConfiguration {
     @Bean
     public ChromeDriver driver(){
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-gpu");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
+//        options.addArguments("--disable-gpu");
+//        options.addArguments("--no-sandbox");
+//        options.addArguments("--headless");
         return new ChromeDriver(options);
     }
 }
