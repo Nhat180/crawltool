@@ -12,16 +12,16 @@ import javax.annotation.PostConstruct;
 public class SeleniumConfiguration {
     @PostConstruct
     void postConstruct(){
-//        System.setProperty("webdriver.chrome.driver", ".\\src\\chromedriver\\chromedriver.exe");
-        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
+//        WebDriverManager.chromedriver().setup();
     }
 
     @Bean
     public ChromeDriver driver(){
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--disable-gpu");
-//        options.addArguments("--no-sandbox");
-//        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
         return new ChromeDriver(options);
     }
 }

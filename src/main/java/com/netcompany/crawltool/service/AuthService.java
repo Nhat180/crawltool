@@ -28,7 +28,7 @@ public class AuthService {
             webDriver = new ChromeDriver(options);
             return "Verify";
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Oops something went wrong");
             return null;
         }
     }
