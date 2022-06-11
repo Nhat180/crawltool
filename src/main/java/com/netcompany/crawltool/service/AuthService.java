@@ -24,7 +24,9 @@ public class AuthService {
             System.out.println(data.getText());
             webDriver.quit();
             ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
             webDriver = new ChromeDriver(options);
             return "Verify";
         } catch (Exception e) {
