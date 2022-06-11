@@ -22,7 +22,7 @@ public class SeleniumConfiguration {
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        options.setBinary(" /app/.apt/usr/bin/google-chrome");
+        options.setBinary("/app/.apt/usr/bin/google-chrome");
         return new ChromeDriver(options);
     }
 }
