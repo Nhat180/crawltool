@@ -18,7 +18,8 @@ public class SeleniumConfiguration {
 
     @Bean
     public ChromeDriver driver(){
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
