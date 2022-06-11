@@ -18,13 +18,14 @@ public class SeleniumConfiguration {
 
     @Bean
     public ChromeDriver driver(){
-//        WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
+        WebDriverManager.chromedriver().setup();
+//        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
+        System.setProperty("webdriver.chrome.whitelistedIps", "");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        options.setBinary("/app/.chromedriver/bin/chromedriver");
+//        options.setBinary("/app/.chromedriver/bin/chromedriver");
         return new ChromeDriver(options);
     }
 }
