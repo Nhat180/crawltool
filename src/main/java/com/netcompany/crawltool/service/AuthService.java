@@ -24,6 +24,7 @@ public class AuthService {
             System.out.println(data.getText());
             webDriver.quit();
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
             options.addArguments("--no-sandbox");
             options.addArguments("--headless");
