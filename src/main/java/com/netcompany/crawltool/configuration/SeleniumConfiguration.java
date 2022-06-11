@@ -19,7 +19,10 @@ public class SeleniumConfiguration {
     @Bean
     public ChromeDriver driver(){
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
         options.addArguments("--headless");
+        options.setBinary("/app/.apt/usr/bin/google_chrome");
         return new ChromeDriver(options);
     }
 }
