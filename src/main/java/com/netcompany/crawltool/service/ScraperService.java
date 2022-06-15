@@ -11,9 +11,13 @@ import lombok.AllArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
 // ref https://www.youtube.com/watch?v=PF0iyeDmu9E
@@ -22,7 +26,7 @@ import java.util.*;
 @AllArgsConstructor
 public class ScraperService {
     //    private static final String URL = "https://pct:Nhatrangg@2022@goto.netcompany.com/cases/GTE676/NCVNOFF/default.aspx";
-    private final WebDriver driver; // sửa
+    private WebDriver driver; // sửa
 
 
 //    @PostConstruct
@@ -46,6 +50,58 @@ public class ScraperService {
             List<WebElement> thuDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[5]"));
             List<WebElement> friDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[6]"));
 
+
+
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            DocumentSnapshot documentSnapshot = dbFirestore.collection("lunch").document("updateTime").get().get();
+            String dtbSatDate = documentSnapshot.get("satDate").toString();
+            dtbSatDate = dtbSatDate.substring(0, 10) + " " + dtbSatDate.substring(11, 19);
+            Timestamp sat = Timestamp.valueOf(dtbSatDate);
+            System.out.println(System.currentTimeMillis());
+            System.out.println(sat.getTime());
+            Timestamp satNext = new Timestamp(sat.getTime() + 630000000);
+            System.out.println(satNext);
+
+
+
+            if(now.after(sat)) {
+                dbFirestore.collection("lunch").document("updateTime").update("satDate", satNext);
+                dbFirestore.collection("lunch").document("mon3").
+                        update(dbFirestore.collection("lunch").document("mon2").get().get().getData());
+                dbFirestore.collection("lunch").document("mon2").
+                        update(dbFirestore.collection("lunch").document("mon1").get().get().getData());
+                dbFirestore.collection("lunch").document("mon1").
+                        update(dbFirestore.collection("lunch").document("mon").get().get().getData());
+
+
+                dbFirestore.collection("lunch").document("tue3").
+                        update(dbFirestore.collection("lunch").document("tue2").get().get().getData());
+                dbFirestore.collection("lunch").document("tue2").
+                        update(dbFirestore.collection("lunch").document("tue1").get().get().getData());
+                dbFirestore.collection("lunch").document("tue1").
+                        update(dbFirestore.collection("lunch").document("tue").get().get().getData());
+
+                dbFirestore.collection("lunch").document("wed3").
+                        update(dbFirestore.collection("lunch").document("wed2").get().get().getData());
+                dbFirestore.collection("lunch").document("wed2").
+                        update(dbFirestore.collection("lunch").document("wed1").get().get().getData());
+                dbFirestore.collection("lunch").document("wed1").
+                        update(dbFirestore.collection("lunch").document("wed").get().get().getData());
+
+                dbFirestore.collection("lunch").document("thu3").
+                        update(dbFirestore.collection("lunch").document("thu2").get().get().getData());
+                dbFirestore.collection("lunch").document("thu2").
+                        update(dbFirestore.collection("lunch").document("thu1").get().get().getData());
+                dbFirestore.collection("lunch").document("thu1").
+                        update(dbFirestore.collection("lunch").document("thu").get().get().getData());
+
+                dbFirestore.collection("lunch").document("fri3").
+                        update(dbFirestore.collection("lunch").document("fri2").get().get().getData());
+                dbFirestore.collection("lunch").document("fri2").
+                        update(dbFirestore.collection("lunch").document("fri1").get().get().getData());
+                dbFirestore.collection("lunch").document("fri1").
+                        update(dbFirestore.collection("lunch").document("fri").get().get().getData());
+                }
 
 
             String monDessert = monDishes.get(monDishes.size() - 1).getText();
@@ -393,61 +449,13 @@ public class ScraperService {
             fri.put("main", friMainDtb);
             dbFirestore.collection("lunch").document("fri").update(fri);
 
-//            System.out.println("checkpoint");
-//            Timestamp now = new Timestamp(System.currentTimeMillis());
-//            System.out.println(now);
-//            DocumentSnapshot documentSnapshot = dbFirestore.collection("lunch").document("updateTime").get().get();
-//            Timestamp dtbSatDate = (Timestamp) documentSnapshot.get("satDate");
-//            System.out.println(dtbSatDate);
-
-//            UpdateTime storedTime;
-//            if(documentSnapshot.exists()){
-//                storedTime = documentSnapshot.toObject(UpdateTime.class);
-//                System.out.println(storedTime.getSatDate());
-//                if(now.after(storedTime.getSatDate())) {
-//                    dbFirestore.collection("lunch").document("mon3").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("mon2").get());
-//                    dbFirestore.collection("lunch").document("mon2").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("mon1").get());
-//                    dbFirestore.collection("lunch").document("mon1").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("mon").get());
-//
-//
-//                    dbFirestore.collection("lunch").document("tue3").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("tue2").get());
-//                    dbFirestore.collection("lunch").document("tue2").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("tue1").get());
-//                    dbFirestore.collection("lunch").document("tue1").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("tue").get());
-//
-//                    dbFirestore.collection("lunch").document("wed3").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("wed2").get());
-//                    dbFirestore.collection("lunch").document("wed2").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("wed1").get());
-//                    dbFirestore.collection("lunch").document("wed1").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("wed").get());
-//
-//                    dbFirestore.collection("lunch").document("thu3").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("thu2").get());
-//                    dbFirestore.collection("lunch").document("thu2").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("thu1").get());
-//                    dbFirestore.collection("lunch").document("thu1").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("thu").get());
-//
-//                    dbFirestore.collection("lunch").document("fri3").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("fri2").get());
-//                    dbFirestore.collection("lunch").document("fri2").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("fri1").get());
-//                    dbFirestore.collection("lunch").document("fri1").
-//                            update((Map<String, Object>) dbFirestore.collection("lunch").document("fri").get());
-//                }
-//            }
 
 
 
+            driver.quit();
+            ChromeOptions options = new ChromeOptions();
+            driver = new ChromeDriver(options);
 
-
-//            driver.quit();
             // TimeUnit.SECONDS.sleep(5);
 
             return("OK");
@@ -458,3 +466,4 @@ public class ScraperService {
         }
     }
 }
+
