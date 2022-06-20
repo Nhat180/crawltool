@@ -13,6 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
@@ -34,15 +36,18 @@ public class ScraperService {
 //        scrape();
 //    }
 
-    public String scrape(UserInfo userInfo) {
+    public ResponseEntity scrape(UserInfo userInfo) {
 
         Menu menu = new Menu();
+        Boolean flag = true;
 
         try {
 
             Firestore dbFirestore = FirestoreClient.getFirestore();
 
-            updateOnTime(dbFirestore);
+            if(!updateOnTime(dbFirestore)){
+                flag = false;
+            }
 
             driver.get("https://" + userInfo.getUsername() + ":" + userInfo.getPassword() + "@goto.netcompany.com/cases/GTE676/NCVNOFF/default.aspx");
             List<WebElement> monDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[2]"));
@@ -51,19 +56,31 @@ public class ScraperService {
             List<WebElement> thuDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[5]"));
             List<WebElement> friDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[6]"));
 
-            crawlByDay(monDishes, "mon", dbFirestore);
-            crawlByDay(tueDishes, "tue", dbFirestore);
-            crawlByDay(wedDishes, "wed", dbFirestore);
-            crawlByDay(thuDishes, "thu", dbFirestore);
-            crawlByDay(friDishes, "fri", dbFirestore);
+            if(!crawlByDay(monDishes, "mon", dbFirestore) ||
+                    !crawlByDay(monDishes, "tue", dbFirestore) ||
+                    !crawlByDay(monDishes, "wed", dbFirestore)||
+                    !crawlByDay(monDishes, "thu", dbFirestore)||
+                    !crawlByDay(monDishes, "fri", dbFirestore)){
+                flag = false;
+            }
 
             driver.quit();
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
             driver = new ChromeDriver(options);
 
             // TimeUnit.SECONDS.sleep(5);
 
-            return("OK");
+//            return("OK");
+            if(flag){
+                return new ResponseEntity<>("Verification is successful!", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Oops!", HttpStatus.BAD_REQUEST);
+            }
+
 
         } catch (Exception e) {
             System.out.println("Oops! Something went wrong!");
@@ -140,7 +157,6 @@ public class ScraperService {
                 data[i] = webElement.get(webElement.size() - 1 - i).getText();
                 dataArr[i] = Arrays.asList(data[i].split("\\n+"));
                 for(int j = 0; j < dataArr[i].size(); j ++){
-                    System.out.println(dataArr[i].get(j));
                     dataArr[i].get(j).trim();
                     if(dataArr[i].get(j).contains("/")){
                         if(!dataArr[i].get(j).endsWith("/")) {
