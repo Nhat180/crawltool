@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 public class SeleniumConfiguration {
 //    @PostConstruct
 //    void postConstruct(){
-//        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
+////        System.setProperty("webdriver.chrome.driver", "/app/.chromedriver/bin/chromedriver");
 //        WebDriverManager.chromedriver().setup();
 //    }
 
