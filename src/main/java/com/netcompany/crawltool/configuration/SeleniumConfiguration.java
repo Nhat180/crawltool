@@ -25,6 +25,6 @@ public class SeleniumConfiguration {
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        return new ChromeDriver();
+        return new ChromeDriver(options);
     }
 }
