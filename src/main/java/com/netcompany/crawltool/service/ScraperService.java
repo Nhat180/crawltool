@@ -42,6 +42,12 @@ public class ScraperService {
         Boolean flag = true;
 
         try {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
+            driver = new ChromeDriver(options);
 
             Firestore dbFirestore = FirestoreClient.getFirestore();
 
@@ -65,14 +71,6 @@ public class ScraperService {
             }
 
             driver.quit();
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--headless");
-            driver = new ChromeDriver(options);
-
-            // TimeUnit.SECONDS.sleep(5);
 
 //            return("OK");
             if(flag){
@@ -84,6 +82,7 @@ public class ScraperService {
 
         } catch (Exception e) {
             System.out.println("Oops! Something went wrong!");
+            driver.quit();
             return new ResponseEntity<>("Oops!", HttpStatus.BAD_REQUEST);
         }
     }
