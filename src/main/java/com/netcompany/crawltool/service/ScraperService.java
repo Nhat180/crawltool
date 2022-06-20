@@ -84,7 +84,7 @@ public class ScraperService {
 
         } catch (Exception e) {
             System.out.println("Oops! Something went wrong!");
-            return null;
+            return new ResponseEntity<>("Oops!", HttpStatus.BAD_REQUEST);
         }
     }
 
