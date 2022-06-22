@@ -63,10 +63,10 @@ public class ScraperService {
             List<WebElement> friDishes = driver.findElements(By.xpath("//*[@id=\"WebPartWPQ6\"]/div[1]/table/tbody/tr/td[6]"));
 
             if(!crawlByDay(monDishes, "mon", dbFirestore) ||
-                    !crawlByDay(monDishes, "tue", dbFirestore) ||
-                    !crawlByDay(monDishes, "wed", dbFirestore)||
-                    !crawlByDay(monDishes, "thu", dbFirestore)||
-                    !crawlByDay(monDishes, "fri", dbFirestore)){
+                    !crawlByDay(tueDishes, "tue", dbFirestore) ||
+                    !crawlByDay(wedDishes, "wed", dbFirestore)||
+                    !crawlByDay(thuDishes, "thu", dbFirestore)||
+                    !crawlByDay(friDishes, "fri", dbFirestore)){
                 flag = false;
             }
 
