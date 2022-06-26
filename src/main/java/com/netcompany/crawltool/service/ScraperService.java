@@ -49,8 +49,6 @@ public class ScraperService {
             options.addArguments("--headless");
             driver = new ChromeDriver(options);
 
-//            driver = new ChromeDriver();
-
             Firestore dbFirestore = FirestoreClient.getFirestore();
 
             if(!updateOnTime(dbFirestore)){

@@ -26,6 +26,5 @@ public class SeleniumConfiguration {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         return new ChromeDriver(options);
-//        return new ChromeDriver();
     }
 }

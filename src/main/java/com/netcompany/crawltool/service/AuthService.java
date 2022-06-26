@@ -25,7 +25,6 @@ public class AuthService {
             options.addArguments("--no-sandbox");
             options.addArguments("--headless");
             webDriver = new ChromeDriver(options);
-//            webDriver = new ChromeDriver();
             webDriver.get("https://" + userInfo.getUsername() + ":" + userInfo.getPassword() + "@goto.netcompany.com/cases/GTE676/NCVNOFF/default.aspx");
             WebElement data = webDriver.findElement(By.xpath("/html/body/form/div[14]/div/div[2]/div[2]/div[3]/table/tbody/tr[2]/td/table/tbody/tr/td[1]/div/div[1]/div[1]/div[2]/div[1]/table/tbody/tr[1]/td[2]"));
             System.out.println(data.getText());
