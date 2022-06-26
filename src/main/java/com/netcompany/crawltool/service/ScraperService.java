@@ -93,12 +93,16 @@ public class ScraperService {
         try{
             Timestamp now = new Timestamp(System.currentTimeMillis());
             DocumentSnapshot documentSnapshot = dbFirestore.collection("lunch").document("updateTime").get().get();
-            String dtbSatDate = documentSnapshot.get("satDate").toString();
-            dtbSatDate = dtbSatDate.substring(0, 10) + " " + dtbSatDate.substring(11, 19);
-            Timestamp sat = Timestamp.valueOf(dtbSatDate);
-            Timestamp satNext = new Timestamp(sat.getTime() + 630000000);
+            String dtbUpdateDate = documentSnapshot.get("updateDate").toString();
+            dtbUpdateDate = dtbUpdateDate.substring(0, 10) + " " + dtbUpdateDate.substring(11, 19);
+            Timestamp updateDate = Timestamp.valueOf(dtbUpdateDate);
 
-            if(now.after(sat)) {
+            if(now.after(updateDate)) {
+                String dtbSatDate = documentSnapshot.get("satDate").toString();
+                dtbSatDate = dtbSatDate.substring(0, 10) + " " + dtbSatDate.substring(11, 19);
+                Timestamp sat = Timestamp.valueOf(dtbSatDate);
+                Timestamp satNext = new Timestamp(sat.getTime() + 630000000);
+
                 dbFirestore.collection("lunch").document("mon").collection("history")
                         .document("monHistory3").update(dbFirestore.collection("lunch").document("mon")
                                 .collection("history").document("monHistory2").get().get().getData());
