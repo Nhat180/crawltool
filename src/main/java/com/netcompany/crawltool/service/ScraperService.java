@@ -102,6 +102,7 @@ public class ScraperService {
                 dtbSatDate = dtbSatDate.substring(0, 10) + " " + dtbSatDate.substring(11, 19);
                 Timestamp sat = Timestamp.valueOf(dtbSatDate);
                 Timestamp satNext = new Timestamp(sat.getTime() + 630000000);
+                Timestamp updateNext = new Timestamp(updateDate.getTime() + 630000000);
 
                 dbFirestore.collection("lunch").document("mon").collection("history")
                         .document("monHistory3").update(dbFirestore.collection("lunch").document("mon")
@@ -165,6 +166,7 @@ public class ScraperService {
                         update("timestamp", new Timestamp(satNext.getTime() - 86400000));
 
                 dbFirestore.collection("lunch").document("updateTime").update("satDate", satNext);
+                dbFirestore.collection("lunch").document("updateTime").update("updateDate", updateNext);
             }
             return true;
 
