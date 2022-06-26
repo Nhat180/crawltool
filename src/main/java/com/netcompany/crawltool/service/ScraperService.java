@@ -49,6 +49,8 @@ public class ScraperService {
             options.addArguments("--headless");
             driver = new ChromeDriver(options);
 
+//            driver = new ChromeDriver();
+
             Firestore dbFirestore = FirestoreClient.getFirestore();
 
             if(!updateOnTime(dbFirestore)){
@@ -97,41 +99,66 @@ public class ScraperService {
             Timestamp satNext = new Timestamp(sat.getTime() + 630000000);
 
             if(now.after(sat)) {
-                dbFirestore.collection("lunch").document("mon3").
-                        update(dbFirestore.collection("lunch").document("mon2").get().get().getData());
-                dbFirestore.collection("lunch").document("mon2").
-                        update(dbFirestore.collection("lunch").document("mon1").get().get().getData());
-                dbFirestore.collection("lunch").document("mon1").
-                        update(dbFirestore.collection("lunch").document("mon").get().get().getData());
+                dbFirestore.collection("lunch").document("mon").collection("history")
+                        .document("monHistory3").update(dbFirestore.collection("lunch").document("mon")
+                                .collection("history").document("monHistory2").get().get().getData());
+                dbFirestore.collection("lunch").document("mon").collection("history")
+                        .document("monHistory2").update(dbFirestore.collection("lunch").document("mon")
+                                .collection("history").document("monHistory1").get().get().getData());
+                dbFirestore.collection("lunch").document("mon").collection("history")
+                        .document("monHistory1").update(dbFirestore.collection("lunch").document("mon")
+                                .get().get().getData());
+                dbFirestore.collection("lunch").document("mon").
+                        update("timestamp", new Timestamp(satNext.getTime() - 432000000));
 
 
-                dbFirestore.collection("lunch").document("tue3").
-                        update(dbFirestore.collection("lunch").document("tue2").get().get().getData());
-                dbFirestore.collection("lunch").document("tue2").
-                        update(dbFirestore.collection("lunch").document("tue1").get().get().getData());
-                dbFirestore.collection("lunch").document("tue1").
-                        update(dbFirestore.collection("lunch").document("tue").get().get().getData());
+                dbFirestore.collection("lunch").document("tue").collection("history")
+                        .document("tueHistory3").update(dbFirestore.collection("lunch").document("tue")
+                                .collection("history").document("tueHistory2").get().get().getData());
+                dbFirestore.collection("lunch").document("tue").collection("history")
+                        .document("tueHistory2").update(dbFirestore.collection("lunch").document("tue")
+                                .collection("history").document("tueHistory1").get().get().getData());
+                dbFirestore.collection("lunch").document("tue").collection("history")
+                        .document("tueHistory1").update(dbFirestore.collection("lunch").document("tue")
+                                .get().get().getData());
+                dbFirestore.collection("lunch").document("tue").
+                        update("timestamp", new Timestamp(satNext.getTime() - 345600000));
 
-                dbFirestore.collection("lunch").document("wed3").
-                        update(dbFirestore.collection("lunch").document("wed2").get().get().getData());
-                dbFirestore.collection("lunch").document("wed2").
-                        update(dbFirestore.collection("lunch").document("wed1").get().get().getData());
-                dbFirestore.collection("lunch").document("wed1").
-                        update(dbFirestore.collection("lunch").document("wed").get().get().getData());
+                dbFirestore.collection("lunch").document("wed").collection("history")
+                        .document("wedHistory3").update(dbFirestore.collection("lunch").document("wed")
+                                .collection("history").document("wedHistory2").get().get().getData());
+                dbFirestore.collection("lunch").document("wed").collection("history")
+                        .document("wedHistory2").update(dbFirestore.collection("lunch").document("wed")
+                                .collection("history").document("wedHistory1").get().get().getData());
+                dbFirestore.collection("lunch").document("wed").collection("history")
+                        .document("wedHistory1").update(dbFirestore.collection("lunch").document("wed")
+                                .get().get().getData());
+                dbFirestore.collection("lunch").document("wed").
+                        update("timestamp", new Timestamp(satNext.getTime() - 259200000));
 
-                dbFirestore.collection("lunch").document("thu3").
-                        update(dbFirestore.collection("lunch").document("thu2").get().get().getData());
-                dbFirestore.collection("lunch").document("thu2").
-                        update(dbFirestore.collection("lunch").document("thu1").get().get().getData());
-                dbFirestore.collection("lunch").document("thu1").
-                        update(dbFirestore.collection("lunch").document("thu").get().get().getData());
+                dbFirestore.collection("lunch").document("thu").collection("history")
+                        .document("thuHistory3").update(dbFirestore.collection("lunch").document("thu")
+                                .collection("history").document("thuHistory2").get().get().getData());
+                dbFirestore.collection("lunch").document("thu").collection("history")
+                        .document("thuHistory2").update(dbFirestore.collection("lunch").document("thu")
+                                .collection("history").document("thuHistory1").get().get().getData());
+                dbFirestore.collection("lunch").document("thu").collection("history")
+                        .document("thuHistory1").update(dbFirestore.collection("lunch").document("thu")
+                                .get().get().getData());
+                dbFirestore.collection("lunch").document("thu").
+                        update("timestamp", new Timestamp(satNext.getTime() - 172800000));
 
-                dbFirestore.collection("lunch").document("fri3").
-                        update(dbFirestore.collection("lunch").document("fri2").get().get().getData());
-                dbFirestore.collection("lunch").document("fri2").
-                        update(dbFirestore.collection("lunch").document("fri1").get().get().getData());
-                dbFirestore.collection("lunch").document("fri1").
-                        update(dbFirestore.collection("lunch").document("fri").get().get().getData());
+                dbFirestore.collection("lunch").document("fri").collection("history")
+                        .document("friHistory3").update(dbFirestore.collection("lunch").document("fri")
+                                .collection("history").document("friHistory2").get().get().getData());
+                dbFirestore.collection("lunch").document("fri").collection("history")
+                        .document("friHistory2").update(dbFirestore.collection("lunch").document("fri")
+                                .collection("history").document("friHistory1").get().get().getData());
+                dbFirestore.collection("lunch").document("fri").collection("history")
+                        .document("friHistory1").update(dbFirestore.collection("lunch").document("fri")
+                                .get().get().getData());
+                dbFirestore.collection("lunch").document("fri").
+                        update("timestamp", new Timestamp(satNext.getTime() - 86400000));
 
                 dbFirestore.collection("lunch").document("updateTime").update("satDate", satNext);
             }
