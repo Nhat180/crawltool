@@ -95,6 +95,8 @@ public class ScraperService {
             dtbUpdateDate = dtbUpdateDate.substring(0, 10) + " " + dtbUpdateDate.substring(11, 19);
             Timestamp updateDate = Timestamp.valueOf(dtbUpdateDate);
 
+            dbFirestore.collection("lunch").document("updateTime").update("updatedTimeField", now);
+
             if(now.after(updateDate)) {
                 String dtbSatDate = documentSnapshot.get("satDate").toString();
                 dtbSatDate = dtbSatDate.substring(0, 10) + " " + dtbSatDate.substring(11, 19);
@@ -188,15 +190,15 @@ public class ScraperService {
                 dataArr[i] = Arrays.asList(data[i].split("\\n+"));
                 for(int j = 0; j < dataArr[i].size(); j ++){
                     dataArr[i].get(j).trim();
-                    if(dataArr[i].get(j).contains("/")){
-                        if(!dataArr[i].get(j).endsWith("/")) {
+                    if(dataArr[i].get(j).contains("/")) {
+                        if (!dataArr[i].get(j).endsWith("/")) {
                             String sub[] = dataArr[i].get(j).split("\\s*/\\s*");
                             System.out.println(sub[1]);
                             dataArr[i].set(j - clearPointer, sub[0] + " (" + sub[1] + ")");
-                        }else{
+                        } else {
                             String sub = dataArr[i].get(j).substring(0, dataArr[i].get(j).length() - 1);
-                            if(j + 1 < dataArr[i].size()){
-                                dataArr[i].set(j - clearPointer, sub + " (" + dataArr[i].get(j+1) + ")");
+                            if (j + 1 < dataArr[i].size()) {
+                                dataArr[i].set(j - clearPointer, sub + " (" + dataArr[i].get(j + 1) + ")");
                                 clearPointer += 1;
                                 j++;
                             } else if (j + 1 == dataArr[i].size()) {
