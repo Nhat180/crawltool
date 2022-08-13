@@ -205,10 +205,17 @@ public class ScraperService {
                                 dataArr[i].set(j - clearPointer, sub);
                             }
                         }
-                    }else if(dataArr[i].size() > j + 1){
-                        dataArr[i].set(j - clearPointer, dataArr[i].get(j) + " (" + dataArr[i].get(j+1) + ")");
-                        clearPointer += 1;
-                        j += 1;
+                    }
+                    else if(dataArr[i].size() > j + 1){
+                        if(dataArr[i].size() > j + 2 && (dataArr[i].get(j+2).charAt(0) == ' ' || Character.isLowerCase(dataArr[i].get(j+2).charAt(0)))){
+                            dataArr[i].set(j - clearPointer, dataArr[i].get(j) + " (" + dataArr[i].get(j+1) + " " + dataArr[i].get(j+2).trim() + ")");
+                            clearPointer += 2;
+                            j += 2;
+                        }else {
+                            dataArr[i].set(j - clearPointer, dataArr[i].get(j) + " (" + dataArr[i].get(j+1) + ")");
+                            clearPointer += 1;
+                            j += 1;
+                        }
                     }
                 }
                 dataUpload[i] = dataArr[i].subList(0, dataArr[i].size() - clearPointer);
